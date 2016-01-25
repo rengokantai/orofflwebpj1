@@ -1,6 +1,25 @@
 /**
  * Created by Hernan Y.Ke on 2016/1/25.
  */
+
+applicationCache.addEventListener("checking",function(){
+
+});
+
+applicationCache.addEventListener("downloading",function(){
+
+});
+
+applicationCache.addEventListener("progress",function(){
+
+});
+applicationCache.addEventListener("cached",function(){
+//installed
+});
+applicationCache.addEventListener("updateready",function(){
+//applicable for update
+    applicationCache.swapCache();
+});
 function search(){
     var query = document.querySelector('input[type=search]');
     if(sessionStorage.getItem(query)!=undefined&&sessionStorage.getItem(query)!=null){
