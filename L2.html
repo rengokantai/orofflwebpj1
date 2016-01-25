@@ -7,11 +7,26 @@
 <body>
 <script>
     console.log(window.navigator.onLine);
+    var timeConn;
     function startConn(){
+        setInterval(function(){
+            var conn = new XMLHttpRequest()
+            conn.open("HEAD","/favicon.ico");
+            conn.addEventListener("load",function(){
+                if(conn.status==200){
 
+                }
+            });
+            conn.addEventListener("error",function(){
+
+            });
+            conn.send();
+        },1000)
     }
     function stopConn(){
-
+        if(timeConn){
+            clearInterval(timeConn);
+        }
     }
 
     window.addEventListener("online",function(e){
