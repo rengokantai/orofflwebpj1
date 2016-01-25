@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #push{display:none;}
+    </style>
+</head>
+<body>
+<section id="push">
+    <output>push available</output>
+    <input type="button">
+</section>
+<script>
+    var pushAvail = false;
+    if('serviceWorker' in navigator && 'showNotification' in ServiceWorkerRegistration.prototype){
+        pushAvail = "webpush";
+        registerServiceWorker();
+    }
+
+    if(pushAvail){
+        document.querySelector("#push").style.display="block";
+        document.querySelector("#btn").addEventListener("click",subscribe);
+    }
+
+    function subscribe(){
+        navigator.serviceWorker.ready.then(function(registration){
+            registration.pushManager.subscribe({userVisibleOnly:true})
+                    .then(updatePushStatus)
+                    .catch(function(e){
+                        if(Notification.permission==='denied'){
+                            alert("x");
+                        }
+                    })
+        })
+    }
+
+    function registerServiceWorker(){
+        navigator.serviceWorker.register('sw.js')
+    }
+</script>
+
+</body>
+</html>
