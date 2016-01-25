@@ -9,11 +9,20 @@ self.addEventListener("install",function(e){
     }));
 });
 self.addEventListener("fetch",function(event){
-    event.respondWith(caches.match(event.request)).then(function(response){
-        if(response){
-            return response;
-        }else{
-            return fetch(event.request);
-        }
-    })
+    if(!navigator.onLine && event.request.url.indexOf("wiki.php")>0){
+        event.respondWith(new Response("offline"),
+            {
+                "headers":{
+                    "Content-Type":"text/html"
+                }
+            });
+    }else {
+        event.respondWith(caches.match(event.request)).then(function (response) {
+            if (response) {
+                return response;
+            } else {
+                return fetch(event.request);
+            }
+        });
+    }
 });
